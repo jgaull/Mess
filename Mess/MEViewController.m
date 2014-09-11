@@ -85,6 +85,13 @@
 
 - (void)uploadAssistCurve {
     
+    [[MFBike sharedInstance] setValue:[MFPropertyData propertyDataWithUnsignedShort:UINT16_MAX / 2] forProperty:kModeoControllerTorqueMultiplier  withCallback:^(NSError *error) {
+        if (error) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error setting torque multiplier" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+    
     NSArray *tourAssitPoints = @[[[MFPoint alloc] initWithX:0 Y:0], [[MFPoint alloc] initWithX:0.3660991 Y:0], [[MFPoint alloc] initWithX:0.8227554 Y:0.9955808], [[MFPoint alloc] initWithX:1 Y:1]];
     MFCubicBezier *bezier = [[MFCubicBezier alloc] initWithPoints:tourAssitPoints maxX:58 maxY:255 curveType:kBikeCurveAssist];
     
@@ -167,8 +174,7 @@
 }
 
 - (void)sensor:(MFSensor *)sensor didFailWithError:(NSError *)error {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [alert show];
+    NSLog(@"sensorDidFailWithError: %@", error.localizedDescription);
 }
 
 - (void)sensor:(MFSensor *)sensor didUpdateValue:(MFSensorData *)data {
