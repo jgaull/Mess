@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC10DECC19A67BF600D90F90 /* libModeoFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C53919A67B5D00951ADD /* libModeoFramework.a */; };
+		FC10DED019A6856500D90F90 /* MFPropertyData+CubicBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = FC10DECF19A6856500D90F90 /* MFPropertyData+CubicBezier.m */; };
 		FCC3C45D19A6793100951ADD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C45C19A6793100951ADD /* Foundation.framework */; };
 		FCC3C45F19A6793100951ADD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C45E19A6793100951ADD /* CoreGraphics.framework */; };
 		FCC3C46119A6793100951ADD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C46019A6793100951ADD /* UIKit.framework */; };
@@ -21,6 +23,15 @@
 		FCC3C47E19A6793100951ADD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C46019A6793100951ADD /* UIKit.framework */; };
 		FCC3C48619A6793100951ADD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FCC3C48419A6793100951ADD /* InfoPlist.strings */; };
 		FCC3C48819A6793100951ADD /* MessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FCC3C48719A6793100951ADD /* MessTests.m */; };
+		FCC3C49219A6798900951ADD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C49119A6798900951ADD /* AudioToolbox.framework */; };
+		FCC3C49419A6799000951ADD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C49319A6799000951ADD /* CFNetwork.framework */; };
+		FCC3C49619A679A100951ADD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C49519A679A100951ADD /* CoreLocation.framework */; };
+		FCC3C49819A679A900951ADD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C49719A679A900951ADD /* libz.dylib */; };
+		FCC3C49A19A679B100951ADD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C49919A679B100951ADD /* MobileCoreServices.framework */; };
+		FCC3C49C19A679B900951ADD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C49B19A679B900951ADD /* QuartzCore.framework */; };
+		FCC3C49E19A679BF00951ADD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C49D19A679BF00951ADD /* Security.framework */; };
+		FCC3C4A219A679CE00951ADD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C4A119A679CE00951ADD /* SystemConfiguration.framework */; };
+		FCC3C4A419A679E900951ADD /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C4A319A679E900951ADD /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,9 +42,25 @@
 			remoteGlobalIDString = FCC3C45819A6793100951ADD;
 			remoteInfo = Mess;
 		};
+		FCC3C53819A67B5D00951ADD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FCC3C53319A67B5D00951ADD /* ModeoFramework.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FCE4AA2418A49643007817C9;
+			remoteInfo = ModeoFramework;
+		};
+		FCC3C53A19A67B5D00951ADD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FCC3C53319A67B5D00951ADD /* ModeoFramework.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FCE4AA3418A49643007817C9;
+			remoteInfo = ModeoFrameworkTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FC10DECE19A6856500D90F90 /* MFPropertyData+CubicBezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MFPropertyData+CubicBezier.h"; sourceTree = "<group>"; };
+		FC10DECF19A6856500D90F90 /* MFPropertyData+CubicBezier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MFPropertyData+CubicBezier.m"; sourceTree = "<group>"; };
 		FCC3C45919A6793100951ADD /* Mess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC3C45C19A6793100951ADD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FCC3C45E19A6793100951ADD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,6 +80,16 @@
 		FCC3C48319A6793100951ADD /* MessTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MessTests-Info.plist"; sourceTree = "<group>"; };
 		FCC3C48519A6793100951ADD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FCC3C48719A6793100951ADD /* MessTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessTests.m; sourceTree = "<group>"; };
+		FCC3C49119A6798900951ADD /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FCC3C49319A6799000951ADD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		FCC3C49519A679A100951ADD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		FCC3C49719A679A900951ADD /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		FCC3C49919A679B100951ADD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		FCC3C49B19A679B900951ADD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FCC3C49D19A679BF00951ADD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		FCC3C4A119A679CE00951ADD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		FCC3C4A319A679E900951ADD /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		FCC3C53319A67B5D00951ADD /* ModeoFramework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ModeoFramework.xcodeproj; path = ../ModeoFramework/ModeoFramework.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +97,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC10DECC19A67BF600D90F90 /* libModeoFramework.a in Frameworks */,
+				FCC3C4A219A679CE00951ADD /* SystemConfiguration.framework in Frameworks */,
+				FCC3C49E19A679BF00951ADD /* Security.framework in Frameworks */,
+				FCC3C49C19A679B900951ADD /* QuartzCore.framework in Frameworks */,
+				FCC3C49A19A679B100951ADD /* MobileCoreServices.framework in Frameworks */,
+				FCC3C49819A679A900951ADD /* libz.dylib in Frameworks */,
+				FCC3C4A419A679E900951ADD /* Parse.framework in Frameworks */,
+				FCC3C49619A679A100951ADD /* CoreLocation.framework in Frameworks */,
 				FCC3C45F19A6793100951ADD /* CoreGraphics.framework in Frameworks */,
+				FCC3C49419A6799000951ADD /* CFNetwork.framework in Frameworks */,
+				FCC3C49219A6798900951ADD /* AudioToolbox.framework in Frameworks */,
 				FCC3C46119A6793100951ADD /* UIKit.framework in Frameworks */,
 				FCC3C45D19A6793100951ADD /* Foundation.framework in Frameworks */,
 			);
@@ -101,6 +148,16 @@
 		FCC3C45B19A6793100951ADD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FCC3C53319A67B5D00951ADD /* ModeoFramework.xcodeproj */,
+				FCC3C4A319A679E900951ADD /* Parse.framework */,
+				FCC3C4A119A679CE00951ADD /* SystemConfiguration.framework */,
+				FCC3C49D19A679BF00951ADD /* Security.framework */,
+				FCC3C49B19A679B900951ADD /* QuartzCore.framework */,
+				FCC3C49919A679B100951ADD /* MobileCoreServices.framework */,
+				FCC3C49719A679A900951ADD /* libz.dylib */,
+				FCC3C49519A679A100951ADD /* CoreLocation.framework */,
+				FCC3C49319A6799000951ADD /* CFNetwork.framework */,
+				FCC3C49119A6798900951ADD /* AudioToolbox.framework */,
 				FCC3C45C19A6793100951ADD /* Foundation.framework */,
 				FCC3C45E19A6793100951ADD /* CoreGraphics.framework */,
 				FCC3C46019A6793100951ADD /* UIKit.framework */,
@@ -112,6 +169,8 @@
 		FCC3C46219A6793100951ADD /* Mess */ = {
 			isa = PBXGroup;
 			children = (
+				FC10DECE19A6856500D90F90 /* MFPropertyData+CubicBezier.h */,
+				FC10DECF19A6856500D90F90 /* MFPropertyData+CubicBezier.m */,
 				FCC3C46B19A6793100951ADD /* MEAppDelegate.h */,
 				FCC3C46C19A6793100951ADD /* MEAppDelegate.m */,
 				FCC3C46E19A6793100951ADD /* Main.storyboard */,
@@ -150,6 +209,15 @@
 				FCC3C48419A6793100951ADD /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FCC3C53419A67B5D00951ADD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FCC3C53919A67B5D00951ADD /* libModeoFramework.a */,
+				FCC3C53B19A67B5D00951ADD /* ModeoFrameworkTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +268,17 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Modeo;
 				TargetAttributes = {
+					FCC3C45819A6793100951ADD = {
+						DevelopmentTeam = G9SC33PXG2;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
+					};
 					FCC3C47919A6793100951ADD = {
 						TestTargetID = FCC3C45819A6793100951ADD;
 					};
@@ -216,6 +295,12 @@
 			mainGroup = FCC3C45019A6793000951ADD;
 			productRefGroup = FCC3C45A19A6793100951ADD /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = FCC3C53419A67B5D00951ADD /* Products */;
+					ProjectRef = FCC3C53319A67B5D00951ADD /* ModeoFramework.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				FCC3C45819A6793100951ADD /* Mess */,
@@ -223,6 +308,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		FCC3C53919A67B5D00951ADD /* libModeoFramework.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libModeoFramework.a;
+			remoteRef = FCC3C53819A67B5D00951ADD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FCC3C53B19A67B5D00951ADD /* ModeoFrameworkTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ModeoFrameworkTests.xctest;
+			remoteRef = FCC3C53A19A67B5D00951ADD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		FCC3C45719A6793100951ADD /* Resources */ = {
@@ -253,6 +355,7 @@
 				FCC3C46D19A6793100951ADD /* MEAppDelegate.m in Sources */,
 				FCC3C47319A6793100951ADD /* MEViewController.m in Sources */,
 				FCC3C46919A6793100951ADD /* main.m in Sources */,
+				FC10DED019A6856500D90F90 /* MFPropertyData+CubicBezier.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,9 +480,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mess/Mess-Prefix.pch";
 				INFOPLIST_FILE = "Mess/Mess-Info.plist";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -390,9 +498,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mess/Mess-Prefix.pch";
 				INFOPLIST_FILE = "Mess/Mess-Info.plist";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -457,6 +570,7 @@
 				FCC3C48D19A6793100951ADD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FCC3C48E19A6793100951ADD /* Build configuration list for PBXNativeTarget "MessTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +579,7 @@
 				FCC3C49019A6793100951ADD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

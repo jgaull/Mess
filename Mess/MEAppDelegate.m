@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 Modeo. All rights reserved.
 //
 
+#import <ModeoFramework/ModeoFramework.h>
+#import <Parse/Parse.h>
+
 #import "MEAppDelegate.h"
 
 @implementation MEAppDelegate
@@ -13,6 +16,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [Parse setApplicationId:@"HSzaGkx6B3kF7Ow3J7utNijE7MrxGIeClkA0Drs8"
+                  clientKey:@"5b1MR4op6iP40MFl1ZjKTp4mhV1wDwPI3YaRjgCv"];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    [MFBike sharedInstance];
+    
     return YES;
 }
 							
