@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <ModeoFramework/ModeoFramework.h>
 
-@interface MEViewController : UIViewController
+@interface MEViewController : UIViewController <MFSensorDelegate>
+
+- (void)sensor:(MFSensor *)sensor didFailWithError:(NSError *)error;
+- (void)sensor:(MFSensor *)sensor didUpdateValue:(MFSensorData *)data;
 
 @end
