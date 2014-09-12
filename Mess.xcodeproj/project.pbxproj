@@ -10,7 +10,7 @@
 		FC10DECC19A67BF600D90F90 /* libModeoFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C53919A67B5D00951ADD /* libModeoFramework.a */; };
 		FC10DED019A6856500D90F90 /* MFPropertyData+CubicBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = FC10DECF19A6856500D90F90 /* MFPropertyData+CubicBezier.m */; };
 		FC663DEE19C1437A00A2F599 /* MEDataPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = FC663DED19C1437A00A2F599 /* MEDataPoint.m */; };
-		FC663DF319C147CD00A2F599 /* MFSensorData+ToDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = FC663DF219C147CD00A2F599 /* MFSensorData+ToDictionary.m */; };
+		FC892B3B19C28FD100E4EEB9 /* MEDataLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = FC892B3A19C28FD100E4EEB9 /* MEDataLogger.m */; };
 		FCC3C45D19A6793100951ADD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C45C19A6793100951ADD /* Foundation.framework */; };
 		FCC3C45F19A6793100951ADD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C45E19A6793100951ADD /* CoreGraphics.framework */; };
 		FCC3C46119A6793100951ADD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C46019A6793100951ADD /* UIKit.framework */; };
@@ -65,8 +65,8 @@
 		FC10DECF19A6856500D90F90 /* MFPropertyData+CubicBezier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MFPropertyData+CubicBezier.m"; sourceTree = "<group>"; };
 		FC663DEC19C1437A00A2F599 /* MEDataPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEDataPoint.h; sourceTree = SOURCE_ROOT; };
 		FC663DED19C1437A00A2F599 /* MEDataPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEDataPoint.m; sourceTree = SOURCE_ROOT; };
-		FC663DF119C147CD00A2F599 /* MFSensorData+ToDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MFSensorData+ToDictionary.h"; sourceTree = "<group>"; };
-		FC663DF219C147CD00A2F599 /* MFSensorData+ToDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MFSensorData+ToDictionary.m"; sourceTree = "<group>"; };
+		FC892B3919C28FD100E4EEB9 /* MEDataLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEDataLogger.h; sourceTree = "<group>"; };
+		FC892B3A19C28FD100E4EEB9 /* MEDataLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEDataLogger.m; sourceTree = "<group>"; };
 		FCC3C45919A6793100951ADD /* Mess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC3C45C19A6793100951ADD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FCC3C45E19A6793100951ADD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -186,8 +186,8 @@
 				FCC3C46319A6793100951ADD /* Supporting Files */,
 				FC663DEC19C1437A00A2F599 /* MEDataPoint.h */,
 				FC663DED19C1437A00A2F599 /* MEDataPoint.m */,
-				FC663DF119C147CD00A2F599 /* MFSensorData+ToDictionary.h */,
-				FC663DF219C147CD00A2F599 /* MFSensorData+ToDictionary.m */,
+				FC892B3919C28FD100E4EEB9 /* MEDataLogger.h */,
+				FC892B3A19C28FD100E4EEB9 /* MEDataLogger.m */,
 			);
 			path = Mess;
 			sourceTree = "<group>";
@@ -365,9 +365,9 @@
 				FCC3C46D19A6793100951ADD /* MEAppDelegate.m in Sources */,
 				FCC3C47319A6793100951ADD /* MEViewController.m in Sources */,
 				FC663DEE19C1437A00A2F599 /* MEDataPoint.m in Sources */,
-				FC663DF319C147CD00A2F599 /* MFSensorData+ToDictionary.m in Sources */,
 				FCC3C46919A6793100951ADD /* main.m in Sources */,
 				FC10DED019A6856500D90F90 /* MFPropertyData+CubicBezier.m in Sources */,
+				FC892B3B19C28FD100E4EEB9 /* MEDataLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

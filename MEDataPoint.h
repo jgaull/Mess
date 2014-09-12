@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <ModeoFramework/ModeoFramework.h>
+#import <CoreLocation/CoreLocation.h>
 
 typedef enum {
     kDataPointTypeSensor,
@@ -20,6 +21,8 @@ typedef enum {
 @property (nonatomic, readonly) NSObject *dataObject;
 
 - (id)initWithSensorData:(MFSensorData *)sensorData;
+- (id)initWithLocationData:(CLLocation *)locationData;
+
 - (NSDictionary *)toDictionary;
 
 @end

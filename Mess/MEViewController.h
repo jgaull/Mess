@@ -7,11 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <ModeoFramework/ModeoFramework.h>
 
-@interface MEViewController : UIViewController <MFSensorDelegate>
+@interface MEViewController : UIViewController
 
-- (void)sensor:(MFSensor *)sensor didFailWithError:(NSError *)error;
-- (void)sensor:(MFSensor *)sensor didUpdateValue:(MFSensorData *)data;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end

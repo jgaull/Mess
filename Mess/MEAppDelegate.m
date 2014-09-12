@@ -10,6 +10,13 @@
 #import <Parse/Parse.h>
 
 #import "MEAppDelegate.h"
+#import "MEDataLogger.h"
+
+@interface MEAppDelegate ()
+
+@property (strong, nonatomic) MEDataLogger *dataLogger;
+
+@end
 
 @implementation MEAppDelegate
 
@@ -21,6 +28,9 @@
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     [MFBike sharedInstance];
+    
+    self.dataLogger = [MEDataLogger new];
+    [self.dataLogger start];
     
     return YES;
 }

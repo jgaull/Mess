@@ -1,51 +1,34 @@
 //
-//  MEViewController.m
+//  MEDataLogger.m
 //  Mess
 //
-//  Created by Jon on 8/21/14.
+//  Created by Jon on 9/11/14.
 //  Copyright (c) 2014 Modeo. All rights reserved.
 //
 
-#import <ModeoFramework/ModeoFramework.h>
-#import <ModeoFramework/ModeoController.h>
-#import <Parse/Parse.h>
-#import "MFPropertyData+CubicBezier.h"
-
-#import "MEViewController.h"
+#import "MEDataLogger.h"
 #import "MEDataPoint.h"
 
-@interface MEViewController ()
-
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@interface MEDataLogger ()
 
 @property (strong, nonatomic) NSArray *sensors;
 @property (strong, nonatomic) NSMutableArray *dataPoints;
 
+@property (strong, nonatomic) CLLocationManager *locationManager;
+
 @end
 
-@implementation MEViewController
+@implementation MEDataLogger
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
+- (void)start {
     [self performSelector:@selector(performConnection) withObject:nil afterDelay:1];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bikeDidDisconnect:) name:kNotificationBikeDidDisconnect object:nil];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)performConnection {
-    self.statusLabel.text = @"Connecting...";
     [[MFBike sharedInstance] connectWithCallback:^(NSError *error) {
         if (!error) {
-            self.statusLabel.text = @"Connected";
             [self uploadAssistCurve];
         }
         else {
@@ -56,13 +39,14 @@
 }
 
 - (void)bikeDidDisconnect:(NSNotification *)notification {
-    self.statusLabel.text = @"Disconnected";
     
-    [self uploadLog];
     [self stopSensorUpdates];
-    [self performConnection];
+    [self stopLocationUpdates];
+    [self uploadLog];
     
     self.dataPoints = nil;
+    
+    [self performConnection];
 }
 
 - (void)uploadLog {
@@ -71,8 +55,12 @@
         [jsonEncodableLog addObject:[dataPoint toDictionary]];
     }
     
+    NSError *e = nil;
+    NSData *dataObj = [NSJSONSerialization dataWithJSONObject:jsonEncodableLog options:kNilOptions error:&e];
+    PFFile *file = [PFFile fileWithName:@"log.ride" data:dataObj];
+    
     PFObject *ride = [PFObject objectWithClassName:@"ride"];
-    [ride setObject:jsonEncodableLog forKey:@"log"];
+    [ride setObject:file forKey:@"log"];
     [ride saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Saved log!");
@@ -95,12 +83,11 @@
     NSArray *tourAssitPoints = @[[[MFPoint alloc] initWithX:0 Y:0], [[MFPoint alloc] initWithX:0.3660991 Y:0], [[MFPoint alloc] initWithX:0.8227554 Y:0.9955808], [[MFPoint alloc] initWithX:1 Y:1]];
     MFCubicBezier *bezier = [[MFCubicBezier alloc] initWithPoints:tourAssitPoints maxX:58 maxY:255 curveType:kBikeCurveAssist];
     
-    self.statusLabel.text = @"Uploading Curve";
     [[MFBike sharedInstance] setValue:[MFPropertyData propertyDataWithBezier:bezier] forProperty:kModeoControllerAssist withCallback:^(NSError *error) {
         if (!error) {
             [self loadSensors];
             [self startSensorUpdates];
-            self.statusLabel.text = @"Ready";
+            [self startLocationUpdates];
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
@@ -119,6 +106,14 @@
     for (MFSensor *sensor in self.sensors) {
         [sensor stopUpdating];
     }
+}
+
+- (void)startLocationUpdates {
+    [self.locationManager startUpdatingLocation];
+}
+
+- (void)stopLocationUpdates {
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)loadSensors {
@@ -184,6 +179,19 @@
     [self.dataPoints addObject:dataPoint];
 }
 
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    CLLocation *location = [locations lastObject];
+    MEDataPoint *dataPoint = [[MEDataPoint alloc] initWithLocationData:location];
+    [self.dataPoints addObject:dataPoint];
+    
+    NSLog(@"Latitude: %f, Longitude: %f", location.coordinate.latitude, location.coordinate.longitude);
+}
+
 - (NSMutableArray *)dataPoints {
     if (!_dataPoints) {
         _dataPoints = [NSMutableArray new];
@@ -191,5 +199,13 @@
     return _dataPoints;
 }
 
+- (CLLocationManager *)locationManager {
+    if (!_locationManager) {
+        _locationManager = [CLLocationManager new];
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    }
+    return _locationManager;
+}
 
 @end

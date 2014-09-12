@@ -7,7 +7,6 @@
 //
 
 #import "MEDataPoint.h"
-#import "MFSensorData+ToDictionary.h"
 
 @implementation MEDataPoint
 
@@ -20,17 +19,38 @@
     return self;
 }
 
+- (id)initWithLocationData:(CLLocation *)locationData {
+    self = [super init];
+    if (self) {
+        _dataObject = locationData;
+        _type = kDataPointTypeLocation;
+    }
+    return self;
+}
+
 - (NSDictionary *)toDictionary {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     
     if ([self.dataObject isKindOfClass:[MFSensorData class]]) {
         MFSensorData *sensorData = (MFSensorData *)self.dataObject;
-        NSDictionary *dataObjectDictionary = [sensorData toDictionary];
-        [dictionary setObject:dataObjectDictionary forKey:@"dataObject"];
-        [dictionary setObject:[NSNumber numberWithInteger:self.type] forKey:@"dataObjectType"];
-        [dictionary setObject:sensorData.timestamp forKey:@"timestamp"];
+        
+        [dictionary setObject:[NSNumber numberWithFloat:sensorData.value] forKey:@"value"];
+        [dictionary setObject:[NSNumber numberWithInteger:sensorData.sensor] forKey:@"sensorId"];
+        [dictionary setObject:[NSString stringWithFormat:@"%@", sensorData.timestamp] forKey:@"timestamp"];
+    }
+    else if ([self.dataObject isKindOfClass:[CLLocation class]]) {
+        CLLocation *locationData = (CLLocation *)self.dataObject;
+        
+        [dictionary setObject:[NSNumber numberWithLong:locationData.coordinate.latitude] forKey:@"latitude"];
+        [dictionary setObject:[NSNumber numberWithLong:locationData.coordinate.longitude] forKey:@"longitude"];
+        [dictionary setObject:[NSNumber numberWithLong:locationData.altitude] forKey:@"altitude"];
+        [dictionary setObject:[NSNumber numberWithFloat:locationData.speed] forKey:@"speed"];
+        [dictionary setObject:[NSNumber numberWithDouble:locationData.horizontalAccuracy] forKey:@"hAccuracy"];
+        [dictionary setObject:[NSNumber numberWithDouble:locationData.verticalAccuracy] forKey:@"vAccuracy"];
+        [dictionary setObject:[NSString stringWithFormat:@"%@", locationData.timestamp] forKey:@"timestamp"];
     }
     
+    [dictionary setObject:[NSNumber numberWithInteger:self.type] forKey:@"type"];
     
     return [NSDictionary dictionaryWithDictionary:dictionary];
 }
