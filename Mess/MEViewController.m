@@ -7,10 +7,15 @@
 //
 
 #import <ModeoFramework/ModeoController.h>
+#import <Parse/Parse.h>
+
+#import "MEDataPoint.h"
 
 #import "MEViewController.h"
 
 @interface MEViewController ()
+
+@property (weak, nonatomic) IBOutlet UIButton *toCSVButton;
 
 @end
 
@@ -28,5 +33,52 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)userDidTapToCSVButton:(UIButton *)sender {
+    PFObject *rideLog = [PFObject objectWithClassName:@"ride"];
+    rideLog.objectId = @"siQICd2ybL";
+    [rideLog refreshInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (!error) {
+            NSLog(@"loaded");
+            PFFile *log = [object objectForKey:@"log"];
+            [log getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                if (!error) {
+                    NSLog(@"Log loaded");
+                    
+                    NSError *error;
+                    NSArray *dataPointDictionaries = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+                    
+                    NSMutableArray *dataPoints = [NSMutableArray new];
+                    
+                    for (NSDictionary *dictionary in dataPointDictionaries) {
+                        MEDataPoint *dataPoint = [[MEDataPoint alloc] initWithDictionary:dictionary];
+                        [dataPoints addObject:dataPoint];
+                    }
+                    
+                    NSString *csv = @"Sensor, Value, Timestamp\n";
+                    for (MEDataPoint *dataPoint in dataPoints) {
+                        if (dataPoint.type == kDataPointTypeSensor) {
+                            
+                            MFSensorData *sensorData = (MFSensorData *)dataPoint.dataObject;
+                            MFBikeSensorIdentifier sensorId = sensorData.sensor;
+                            float value = sensorData.value;
+                            NSDate *timestamp = sensorData.timestamp;
+                            
+                            NSString *dataPointLine = [NSString stringWithFormat:@"%d,%f,%@\n", sensorId, value, timestamp];
+                            csv = [NSString stringWithFormat:@"%@%@", csv, dataPointLine];
+                        }
+                    }
+                    
+                    NSLog(@"%@", csv);
+                }
+                else {
+                    NSLog(@"Error loading file: %@", error.localizedDescription);
+                }
+            }];
+        }
+        else {
+            NSLog(@"Error loading ride: %@", error.localizedDescription);
+        }
+    }];
+}
 
 @end

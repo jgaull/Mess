@@ -14,7 +14,6 @@
     self = [super init];
     if (self) {
         _dataObject = sensorData;
-        _type = kDataPointTypeSensor;
     }
     return self;
 }
@@ -23,7 +22,46 @@
     self = [super init];
     if (self) {
         _dataObject = locationData;
-        _type = kDataPointTypeLocation;
+    }
+    return self;
+}
+
+- (id)initWithDictionary:(NSDictionary *)dictionary {
+    self = [super init];
+    if (self) {
+        MEDataPointType type = [[dictionary objectForKey:@"type"] intValue];
+        
+        if (type == kDataPointTypeSensor) {
+            
+            float value = [[dictionary objectForKey:@"value"] floatValue];
+            MFBikeSensorIdentifier sensorId = [[dictionary objectForKey:@"sensorId"] intValue];
+            
+            NSString *timestampString = [dictionary objectForKey:@"timestamp"];
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];
+            NSDate *timestamp = [dateFormat dateFromString:timestampString];
+            
+            MFSensorData *sensorData = [[MFSensorData alloc] initWithValue:value timestamp:timestamp sensor:sensorId];
+            
+            _dataObject = sensorData;
+        }
+        else {
+            double latitude = [[dictionary objectForKey:@"latitude"] doubleValue];
+            double longitude = [[dictionary objectForKey:@"longitude"] doubleValue];
+            double altitude = [[dictionary objectForKey:@"altitude"] doubleValue];
+            double speed = [[dictionary objectForKey:@"speed"] doubleValue];
+            double hAccuracy = [[dictionary objectForKey:@"haccuracy"] doubleValue];
+            double vAccuracy = [[dictionary objectForKey:@"vAccuracy"] doubleValue];
+            
+            NSString *timestampString = [dictionary objectForKey:@"timestamp"];
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];
+            NSDate *timestamp = [dateFormat dateFromString:timestampString];
+            
+            CLLocation *location = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) altitude:altitude horizontalAccuracy:hAccuracy verticalAccuracy:vAccuracy course:0 speed:speed timestamp:timestamp];
+            
+            _dataObject = location;
+        }
     }
     return self;
 }
@@ -41,9 +79,9 @@
     else if ([self.dataObject isKindOfClass:[CLLocation class]]) {
         CLLocation *locationData = (CLLocation *)self.dataObject;
         
-        [dictionary setObject:[NSNumber numberWithLong:locationData.coordinate.latitude] forKey:@"latitude"];
-        [dictionary setObject:[NSNumber numberWithLong:locationData.coordinate.longitude] forKey:@"longitude"];
-        [dictionary setObject:[NSNumber numberWithLong:locationData.altitude] forKey:@"altitude"];
+        [dictionary setObject:[NSNumber numberWithDouble:locationData.coordinate.latitude] forKey:@"latitude"];
+        [dictionary setObject:[NSNumber numberWithDouble:locationData.coordinate.longitude] forKey:@"longitude"];
+        [dictionary setObject:[NSNumber numberWithDouble:locationData.altitude] forKey:@"altitude"];
         [dictionary setObject:[NSNumber numberWithFloat:locationData.speed] forKey:@"speed"];
         [dictionary setObject:[NSNumber numberWithDouble:locationData.horizontalAccuracy] forKey:@"hAccuracy"];
         [dictionary setObject:[NSNumber numberWithDouble:locationData.verticalAccuracy] forKey:@"vAccuracy"];
@@ -53,6 +91,15 @@
     [dictionary setObject:[NSNumber numberWithInteger:self.type] forKey:@"type"];
     
     return [NSDictionary dictionaryWithDictionary:dictionary];
+}
+
+- (MEDataPointType)type {
+    if ([self.dataObject isKindOfClass:[CLLocation class]]) {
+        return kDataPointTypeLocation;
+    }
+    else {
+        return kDataPointTypeSensor;
+    }
 }
 
 @end

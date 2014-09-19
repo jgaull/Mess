@@ -22,6 +22,7 @@ typedef enum {
 
 - (id)initWithSensorData:(MFSensorData *)sensorData;
 - (id)initWithLocationData:(CLLocation *)locationData;
+- (id)initWithDictionary:(NSDictionary *)dictionary;
 
 - (NSDictionary *)toDictionary;
 
