@@ -11,6 +11,7 @@
 
 #import "MEAppDelegate.h"
 #import "MEDataLogger.h"
+#import "MERemoteLogger.h"
 
 @interface MEAppDelegate ()
 
@@ -31,6 +32,18 @@
     
     self.dataLogger = [MEDataLogger new];
     [self.dataLogger start];
+    
+    //UIApplicationLaunchOptionsBluetoothCentralsKey, UIApplicationLaunchOptionsBluetoothPeripheralsKey
+    
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsBluetoothCentralsKey]) {
+        NSArray *centralManagerIdentifiers = [launchOptions objectForKey:UIApplicationLaunchOptionsBluetoothCentralsKey];
+        [[MERemoteLogger sharedInstance] log:[NSString stringWithFormat:@"Launched with centrals key. %lu centrals.", (unsigned long)centralManagerIdentifiers.count]];
+    }
+    
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsBluetoothPeripheralsKey]) {
+        NSArray *peripheralManagerIdentifiers = [launchOptions objectForKey:UIApplicationLaunchOptionsBluetoothPeripheralsKey];
+        [[MERemoteLogger sharedInstance] log:[NSString stringWithFormat:@"Launched with peripherals key. %lu centrals.", (unsigned long)peripheralManagerIdentifiers.count]];
+    }
     
     return YES;
 }

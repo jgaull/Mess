@@ -10,6 +10,7 @@
 		FC10DECC19A67BF600D90F90 /* libModeoFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C53919A67B5D00951ADD /* libModeoFramework.a */; };
 		FC10DED019A6856500D90F90 /* MFPropertyData+CubicBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = FC10DECF19A6856500D90F90 /* MFPropertyData+CubicBezier.m */; };
 		FC663DEE19C1437A00A2F599 /* MEDataPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = FC663DED19C1437A00A2F599 /* MEDataPoint.m */; };
+		FC78122219CF9C380057A544 /* MERemoteLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = FC78122119CF9C380057A544 /* MERemoteLogger.m */; };
 		FC892B3B19C28FD100E4EEB9 /* MEDataLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = FC892B3A19C28FD100E4EEB9 /* MEDataLogger.m */; };
 		FCC3C45D19A6793100951ADD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C45C19A6793100951ADD /* Foundation.framework */; };
 		FCC3C45F19A6793100951ADD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC3C45E19A6793100951ADD /* CoreGraphics.framework */; };
@@ -65,6 +66,8 @@
 		FC10DECF19A6856500D90F90 /* MFPropertyData+CubicBezier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MFPropertyData+CubicBezier.m"; sourceTree = "<group>"; };
 		FC663DEC19C1437A00A2F599 /* MEDataPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEDataPoint.h; sourceTree = SOURCE_ROOT; };
 		FC663DED19C1437A00A2F599 /* MEDataPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEDataPoint.m; sourceTree = SOURCE_ROOT; };
+		FC78122019CF9C380057A544 /* MERemoteLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MERemoteLogger.h; sourceTree = "<group>"; };
+		FC78122119CF9C380057A544 /* MERemoteLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MERemoteLogger.m; sourceTree = "<group>"; };
 		FC892B3919C28FD100E4EEB9 /* MEDataLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEDataLogger.h; sourceTree = "<group>"; };
 		FC892B3A19C28FD100E4EEB9 /* MEDataLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEDataLogger.m; sourceTree = "<group>"; };
 		FCC3C45919A6793100951ADD /* Mess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mess.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +191,8 @@
 				FC663DED19C1437A00A2F599 /* MEDataPoint.m */,
 				FC892B3919C28FD100E4EEB9 /* MEDataLogger.h */,
 				FC892B3A19C28FD100E4EEB9 /* MEDataLogger.m */,
+				FC78122019CF9C380057A544 /* MERemoteLogger.h */,
+				FC78122119CF9C380057A544 /* MERemoteLogger.m */,
 			);
 			path = Mess;
 			sourceTree = "<group>";
@@ -366,6 +371,7 @@
 				FCC3C47319A6793100951ADD /* MEViewController.m in Sources */,
 				FC663DEE19C1437A00A2F599 /* MEDataPoint.m in Sources */,
 				FCC3C46919A6793100951ADD /* main.m in Sources */,
+				FC78122219CF9C380057A544 /* MERemoteLogger.m in Sources */,
 				FC10DED019A6856500D90F90 /* MFPropertyData+CubicBezier.m in Sources */,
 				FC892B3B19C28FD100E4EEB9 /* MEDataLogger.m in Sources */,
 			);

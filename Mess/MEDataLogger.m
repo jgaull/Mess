@@ -8,6 +8,7 @@
 
 #import "MEDataLogger.h"
 #import "MEDataPoint.h"
+#import "MERemoteLogger.h"
 
 @interface MEDataLogger ()
 
@@ -15,6 +16,7 @@
 @property (strong, nonatomic) NSMutableArray *dataPoints;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;
 
 @end
 
@@ -47,6 +49,9 @@
     self.dataPoints = nil;
     
     [self performConnection];
+    
+    [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskId];
+    self.backgroundTaskId = 0;
 }
 
 - (void)uploadLog {
@@ -85,6 +90,13 @@
     
     [[MFBike sharedInstance] setValue:[MFPropertyData propertyDataWithBezier:bezier] forProperty:kModeoControllerAssist withCallback:^(NSError *error) {
         if (!error) {
+            
+            self.backgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+                NSLog(@"Background task is expiring!");
+                
+                [[MERemoteLogger sharedInstance] log:@"Background task is expiring!"];
+            }];
+            
             [self loadSensors];
             [self startSensorUpdates];
             [self startLocationUpdates];
@@ -109,7 +121,16 @@
 }
 
 - (void)startLocationUpdates {
-    [self.locationManager startUpdatingLocation];
+    
+    [self.locationManager requestAlwaysAuthorization];
+    if ([CLLocationManager locationServicesEnabled]) {
+        NSLog(@"Has location services enabled.");
+        [self.locationManager startUpdatingLocation];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Error" message:@"Location services is not enabled" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 - (void)stopLocationUpdates {
@@ -131,10 +152,12 @@
     speedManager.updateInterval = 1;
     [sensors addObject:speedManager];
     
+    /*
     MFSensor *currentStrainManager = [[MFSensor alloc] initWithSensor:kBikeSensorCurrentStrain];
     currentStrainManager.delegate = self;
     currentStrainManager.updateInterval = 0.1;
     [sensors addObject:currentStrainManager];
+     */
     
     /*
      MFSensor *rawStrainManager = [[MFSensor alloc] initWithSensor:kBikeSensorRawStrain];
@@ -152,18 +175,23 @@
     
     MFSensor *batteryVoltageSensor = [[MFSensor alloc] initWithSensor:kBikeSensorBatteryVoltage];
     batteryVoltageSensor.delegate = self;
-    batteryVoltageSensor.updateInterval = 1;
+    batteryVoltageSensor.updateInterval = 0.1;
     [sensors addObject:batteryVoltageSensor];
     
     MFSensor *motorTempSensor = [[MFSensor alloc] initWithSensor:kBikeSensorMotorTemp];
     motorTempSensor.delegate = self;
-    motorTempSensor.updateInterval = 1;
+    motorTempSensor.updateInterval = 5;
     [sensors addObject:motorTempSensor];
     
     MFSensor *filteredRiderEffortSensor = [[MFSensor alloc] initWithSensor:kBikeSensorFilteredRiderEffort];
     filteredRiderEffortSensor.delegate = self;
     filteredRiderEffortSensor.updateInterval = 0.1;
     [sensors addObject:filteredRiderEffortSensor];
+    
+    MFSensor *batteryPercentageSensor = [[MFSensor alloc] initWithSensor:kBikeSensorBatteryPercentage];
+    batteryPercentageSensor.delegate = self;
+    batteryPercentageSensor.updateInterval = 1;
+    [sensors addObject:batteryPercentageSensor];
     
     self.sensors = [NSArray arrayWithArray:sensors];
 }
@@ -203,6 +231,7 @@
     if (!_locationManager) {
         _locationManager = [CLLocationManager new];
         _locationManager.delegate = self;
+        _locationManager.distanceFilter = kCLDistanceFilterNone;
         _locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
     }
     return _locationManager;

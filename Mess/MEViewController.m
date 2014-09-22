@@ -16,6 +16,7 @@
 @interface MEViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *toCSVButton;
+@property (weak, nonatomic) IBOutlet UILabel *label;
 
 @end
 
@@ -34,6 +35,19 @@
 }
 
 - (IBAction)userDidTapToCSVButton:(UIButton *)sender {
+    
+    [[MFBike sharedInstance] valueForSensor:kBikeSensorBatteryPercentage withCallback:^(float value, NSError *error) {
+        if (!error) {
+            float percentage = (value / UINT16_MAX) * 100;
+            self.label.text = [NSString stringWithFormat:@"%.2f%%", percentage];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error reading battery level." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+    
+    /*
     PFObject *rideLog = [PFObject objectWithClassName:@"ride"];
     rideLog.objectId = @"siQICd2ybL";
     [rideLog refreshInBackgroundWithBlock:^(PFObject *object, NSError *error) {
@@ -79,6 +93,7 @@
             NSLog(@"Error loading ride: %@", error.localizedDescription);
         }
     }];
+     */
 }
 
 @end
