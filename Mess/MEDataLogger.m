@@ -49,9 +49,6 @@
     self.dataPoints = nil;
     
     [self performConnection];
-    
-    [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskId];
-    self.backgroundTaskId = 0;
 }
 
 - (void)uploadLog {
@@ -69,6 +66,9 @@
     [ride saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Saved log!");
+            
+            [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskId];
+            self.backgroundTaskId = 0;
         }
         else {
             NSLog(@"Error saving log: %@", error.localizedDescription);
@@ -78,13 +78,16 @@
 
 - (void)uploadAssistCurve {
     
+    /*
     [[MFBike sharedInstance] setValue:[MFPropertyData propertyDataWithUnsignedShort:UINT16_MAX / 2] forProperty:kModeoControllerTorqueMultiplier  withCallback:^(NSError *error) {
         if (error) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error setting torque multiplier" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
             [alert show];
         }
     }];
+     */
     
+    /*
     NSArray *tourAssitPoints = @[[[MFPoint alloc] initWithX:0 Y:0], [[MFPoint alloc] initWithX:0.3660991 Y:0], [[MFPoint alloc] initWithX:0.8227554 Y:0.9955808], [[MFPoint alloc] initWithX:1 Y:1]];
     MFCubicBezier *bezier = [[MFCubicBezier alloc] initWithPoints:tourAssitPoints maxX:58 maxY:255 curveType:kBikeCurveAssist];
     
@@ -106,6 +109,17 @@
             [alert show];
         }
     }];
+     */
+    
+    self.backgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        NSLog(@"Background task is expiring!");
+        
+        [[MERemoteLogger sharedInstance] log:@"Background task is expiring!"];
+    }];
+    
+    [self loadSensors];
+    [self startSensorUpdates];
+    [self startLocationUpdates];
 }
 
 - (void)startSensorUpdates {
@@ -201,7 +215,7 @@
 }
 
 - (void)sensor:(MFSensor *)sensor didUpdateValue:(MFSensorData *)data {
-    NSLog(@"Sensor: %d, value: %f", data.sensor, data.value);
+    //NSLog(@"Sensor: %d, value: %f", data.sensor, data.value);
     
     MEDataPoint *dataPoint = [[MEDataPoint alloc] initWithSensorData:data];
     [self.dataPoints addObject:dataPoint];
@@ -217,7 +231,7 @@
     MEDataPoint *dataPoint = [[MEDataPoint alloc] initWithLocationData:location];
     [self.dataPoints addObject:dataPoint];
     
-    NSLog(@"Latitude: %f, Longitude: %f", location.coordinate.latitude, location.coordinate.longitude);
+    //NSLog(@"Latitude: %f, Longitude: %f", location.coordinate.latitude, location.coordinate.longitude);
 }
 
 - (NSMutableArray *)dataPoints {

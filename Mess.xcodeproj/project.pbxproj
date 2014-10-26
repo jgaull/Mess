@@ -70,6 +70,7 @@
 		FC78122119CF9C380057A544 /* MERemoteLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MERemoteLogger.m; sourceTree = "<group>"; };
 		FC892B3919C28FD100E4EEB9 /* MEDataLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEDataLogger.h; sourceTree = "<group>"; };
 		FC892B3A19C28FD100E4EEB9 /* MEDataLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEDataLogger.m; sourceTree = "<group>"; };
+		FCA54E6E19FC94FC00C56A61 /* MFConnectionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFConnectionManager.h; sourceTree = "<group>"; };
 		FCC3C45919A6793100951ADD /* Mess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC3C45C19A6793100951ADD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FCC3C45E19A6793100951ADD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -178,6 +179,7 @@
 		FCC3C46219A6793100951ADD /* Mess */ = {
 			isa = PBXGroup;
 			children = (
+				FCA54E6E19FC94FC00C56A61 /* MFConnectionManager.h */,
 				FC10DECE19A6856500D90F90 /* MFPropertyData+CubicBezier.h */,
 				FC10DECF19A6856500D90F90 /* MFPropertyData+CubicBezier.m */,
 				FCC3C46B19A6793100951ADD /* MEAppDelegate.h */,
