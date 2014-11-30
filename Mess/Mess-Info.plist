@@ -26,6 +26,10 @@
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app tracks your every move.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>I love you.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>I need location.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

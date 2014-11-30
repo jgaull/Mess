@@ -23,21 +23,28 @@
 @implementation MEDataLogger
 
 - (void)start {
-    [self performSelector:@selector(performConnection) withObject:nil afterDelay:1];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bikeDidDisconnect:) name:kNotificationBikeDidDisconnect object:nil];
-}
-
-- (void)performConnection {
+    self.backgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        NSLog(@"Background task is expiring!");
+        
+        [[MERemoteLogger sharedInstance] log:@"Background task is expiring!"];
+    }];
+    
     [[MFBike sharedInstance] connectWithCallback:^(NSError *error) {
         if (!error) {
-            [self uploadAssistCurve];
+            [self loadSensors];
+            [self startSensorUpdates];
+            
+            //Location updates weren't working if I called startLocationUpdates directly from this block. Instead I need to ensure it's run on the main thread.
+            [self performSelectorOnMainThread:@selector(startLocationUpdates) withObject:nil waitUntilDone:NO];
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
             [alert show];
         }
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bikeDidDisconnect:) name:kNotificationBikeDidDisconnect object:nil];
 }
 
 - (void)bikeDidDisconnect:(NSNotification *)notification {
@@ -48,78 +55,8 @@
     
     self.dataPoints = nil;
     
-    [self performConnection];
-}
-
-- (void)uploadLog {
-    NSMutableArray *jsonEncodableLog = [NSMutableArray new];
-    for (MEDataPoint *dataPoint in self.dataPoints) {
-        [jsonEncodableLog addObject:[dataPoint toDictionary]];
-    }
-    
-    NSError *e = nil;
-    NSData *dataObj = [NSJSONSerialization dataWithJSONObject:jsonEncodableLog options:kNilOptions error:&e];
-    PFFile *file = [PFFile fileWithName:@"log.ride" data:dataObj];
-    
-    PFObject *ride = [PFObject objectWithClassName:@"ride"];
-    [ride setObject:file forKey:@"log"];
-    [ride saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"Saved log!");
-            
-            [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskId];
-            self.backgroundTaskId = 0;
-        }
-        else {
-            NSLog(@"Error saving log: %@", error.localizedDescription);
-        }
-    }];
-}
-
-- (void)uploadAssistCurve {
-    
-    /*
-    [[MFBike sharedInstance] setValue:[MFPropertyData propertyDataWithUnsignedShort:UINT16_MAX / 2] forProperty:kModeoControllerTorqueMultiplier  withCallback:^(NSError *error) {
-        if (error) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error setting torque multiplier" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-            [alert show];
-        }
-    }];
-     */
-    
-    /*
-    NSArray *tourAssitPoints = @[[[MFPoint alloc] initWithX:0 Y:0], [[MFPoint alloc] initWithX:0.3660991 Y:0], [[MFPoint alloc] initWithX:0.8227554 Y:0.9955808], [[MFPoint alloc] initWithX:1 Y:1]];
-    MFCubicBezier *bezier = [[MFCubicBezier alloc] initWithPoints:tourAssitPoints maxX:58 maxY:255 curveType:kBikeCurveAssist];
-    
-    [[MFBike sharedInstance] setValue:[MFPropertyData propertyDataWithBezier:bezier] forProperty:kModeoControllerAssist withCallback:^(NSError *error) {
-        if (!error) {
-            
-            self.backgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-                NSLog(@"Background task is expiring!");
-                
-                [[MERemoteLogger sharedInstance] log:@"Background task is expiring!"];
-            }];
-            
-            [self loadSensors];
-            [self startSensorUpdates];
-            [self startLocationUpdates];
-        }
-        else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-            [alert show];
-        }
-    }];
-     */
-    
-    self.backgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        NSLog(@"Background task is expiring!");
-        
-        [[MERemoteLogger sharedInstance] log:@"Background task is expiring!"];
-    }];
-    
-    [self loadSensors];
-    [self startSensorUpdates];
-    [self startLocationUpdates];
+    //[self performConnection];
+#warning This may be breaking background state restoration in BLE
 }
 
 - (void)startSensorUpdates {
@@ -137,8 +74,9 @@
 - (void)startLocationUpdates {
     
     [self.locationManager requestAlwaysAuthorization];
+    
     if ([CLLocationManager locationServicesEnabled]) {
-        NSLog(@"Has location services enabled.");
+        //NSLog(@"Has location services enabled.");
         [self.locationManager startUpdatingLocation];
     }
     else {
@@ -210,6 +148,31 @@
     self.sensors = [NSArray arrayWithArray:sensors];
 }
 
+- (void)uploadLog {
+    NSMutableArray *jsonEncodableLog = [NSMutableArray new];
+    for (MEDataPoint *dataPoint in self.dataPoints) {
+        [jsonEncodableLog addObject:[dataPoint toDictionary]];
+    }
+    
+    NSError *e = nil;
+    NSData *dataObj = [NSJSONSerialization dataWithJSONObject:jsonEncodableLog options:kNilOptions error:&e];
+    PFFile *file = [PFFile fileWithName:@"log.ride" data:dataObj];
+    
+    PFObject *ride = [PFObject objectWithClassName:@"ride"];
+    [ride setObject:file forKey:@"log"];
+    [ride saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Saved log!");
+            
+            [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskId];
+            self.backgroundTaskId = 0;
+        }
+        else {
+            NSLog(@"Error saving log: %@", error.localizedDescription);
+        }
+    }];
+}
+
 - (void)sensor:(MFSensor *)sensor didFailWithError:(NSError *)error {
     NSLog(@"sensorDidFailWithError: %@", error.localizedDescription);
 }
@@ -231,7 +194,7 @@
     MEDataPoint *dataPoint = [[MEDataPoint alloc] initWithLocationData:location];
     [self.dataPoints addObject:dataPoint];
     
-    //NSLog(@"Latitude: %f, Longitude: %f", location.coordinate.latitude, location.coordinate.longitude);
+    NSLog(@"Latitude: %f, Longitude: %f", location.coordinate.latitude, location.coordinate.longitude);
 }
 
 - (NSMutableArray *)dataPoints {

@@ -30,7 +30,7 @@
             NSLog(@"saved log");
         }
         else {
-            NSLog(@"error saving long");
+            NSLog(@"error saving log");
         }
     }];
 }

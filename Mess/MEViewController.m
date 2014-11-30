@@ -36,6 +36,8 @@
 
 - (IBAction)userDidTapToCSVButton:(UIButton *)sender {
     
+    //kill(getpid(), SIGKILL);
+    
     [[MFBike sharedInstance] valueForSensor:kBikeSensorBatteryPercentage withCallback:^(float value, NSError *error) {
         if (!error) {
             float percentage = (value / UINT16_MAX) * 100;
